@@ -1,8 +1,6 @@
 "use strict";
 
-let caractéristiques=["nerd","sportif","débile","otaku","courageux"]; // définir une liste de caractéristiques
 let prenoms=["Kishini","Henrique","Arthur","Julien","Johanna"]; // définir les prénoms des survivants
-
 
 class characteristics{
     constructor(name,attack,die,dieAttack){ // paramètres de mes personnages
@@ -13,12 +11,13 @@ class characteristics{
     } 
 }
 
-let nerd=new characteristics('nerd',0.2,0.3,0.5); // définir mes caractéristiques et les pourcentages d'action
+let nerd=new characteristics('nerd',0.2,0.3,0.5); // définir les caractéristiques et les pourcentages d'action
 let sportif=new characteristics('sportif',0.4,0.1,0.5);
 let débile=new characteristics('débile',0.1,0.6,0.3);
 let otaku=new characteristics('otaku',0.3,0.4,0.3);
 let courageux=new characteristics('courageux',0.6,0.2,0.2);
 
+let caractéristiques=[nerd,sportif,débile,otaku,courageux]; // créer un tableau des caractéristiques
 class survivor{
     constructor(name,characteristics){ // paramètres des survivants
         this.name=name;
@@ -27,11 +26,11 @@ class survivor{
     }
 }
 
-let survivor1=new survivor(prenoms[Math.floor(Math.random()*prenoms.length)],characteristics[Math.floor(Math.random()*characteristics.length)]) // prénom et caractéristique générés aléatoirement dans les tableaux qui leur correspondent
-let survivor2=new survivor(prenoms[Math.floor(Math.random()*prenoms.length)],characteristics[Math.floor(Math.random()*characteristics.length)])
-let survivor3=new survivor(prenoms[Math.floor(Math.random()*prenoms.length)],characteristics[Math.floor(Math.random()*characteristics.length)])
-let survivor4=new survivor(prenoms[Math.floor(Math.random()*prenoms.length)],characteristics[Math.floor(Math.random()*characteristics.length)])
-let survivor5=new survivor(prenoms[Math.floor(Math.random()*prenoms.length)],characteristics[Math.floor(Math.random()*characteristics.length)])
+let survivor1=new survivor(prenoms[Math.floor(Math.random()*prenoms.length)],caractéristiques[Math.floor(Math.random()*caractéristiques.length)]) // prénom et caractéristique générés aléatoirement dans les tableaux qui leur correspondent
+let survivor2=new survivor(prenoms[Math.floor(Math.random()*prenoms.length)],caractéristiques[Math.floor(Math.random()*caractéristiques.length)])
+let survivor3=new survivor(prenoms[Math.floor(Math.random()*prenoms.length)],caractéristiques[Math.floor(Math.random()*caractéristiques.length)])
+let survivor4=new survivor(prenoms[Math.floor(Math.random()*prenoms.length)],caractéristiques[Math.floor(Math.random()*caractéristiques.length)])
+let survivor5=new survivor(prenoms[Math.floor(Math.random()*prenoms.length)],caractéristiques[Math.floor(Math.random()*caractéristiques.length)])
 let morts=[]
 
 class killer{
@@ -41,12 +40,12 @@ class killer{
     }
     attackSurvivor(survivor){ // méthode pour attaquer les survivants
         let action=Math.random();
-        if(action>0.66){
+        if(action>survivor.characteristics.attack){
             this.hp = this.hp-10
             console.log(survivor.name + " esquive et inflige 10 de dégâts à " + this.name );
             console.log("il reste " + this.hp + " points de vie à " + this.name);
         }
-        else if(action<0.33){
+        else if(action<survivor.characteristics.dieAttack){
             survivor.dead=true
             this.hp = this.hp-15
             console.log(survivor.name + " meurt et inflige 15 de dégâts à " + this.name);
